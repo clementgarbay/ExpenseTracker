@@ -24,25 +24,28 @@ export function addExpense (
   date,
   proof
 ) {
-  const body = JSON.stringify({
-    gg_spreadsheetId: googleConfig.spreadsheetId,
-    gg_folderId: googleConfig.folderId,
-    type,
-    recipient,
-    description,
-    amount,
-    currency,
-    date,
-    proof
+  const formData = new FormData()
+  formData.append('gg_spreadsheetId', googleConfig.spreadsheetId)
+  formData.append('gg_folderId', googleConfig.folderId)
+  formData.append('type', type)
+  formData.append('recipient', recipient)
+  formData.append('description', description)
+  formData.append('amount', amount)
+  formData.append('currency', currency)
+  formData.append('date', date)
+  formData.append('proof', {
+    type: 'image/jpeg',
+    name: 'proof.jpg',
+    uri: proof
   })
 
   return fetch(`${apiConfig.endpoint}/expense`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'multipart/form-data'
     },
-    body
+    body: formData
   })
   .then(handleErrors)
 }
