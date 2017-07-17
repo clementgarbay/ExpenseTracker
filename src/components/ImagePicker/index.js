@@ -18,7 +18,7 @@ const ImagePicker = (props) => (
           <Image
             style={styles.image}
             source={{
-              uri: `data:image/jpeg;base64,${props.source}`
+              uri: props.source
             }}
           />
           <Button
