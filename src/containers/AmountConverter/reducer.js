@@ -12,10 +12,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case TYPES.COMPUTE_AMOUNT_TO:
       const { amountFrom, exchangeRate } = action.payload
-      const amountTo = amountFrom ? (parseFloat(amountFrom) * exchangeRate).toFixed(2) : null
+
+      const amountFromDot = amountFrom.replace(',', '.')
+      const amountTo = amountFrom ? (parseFloat(amountFromDot) * exchangeRate).toFixed(2) : null
 
       return Object.assign({}, state, {
-        amountFrom,
+        amountFrom: amountFromDot,
         amountTo
       })
 
