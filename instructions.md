@@ -4,7 +4,7 @@
 
 Déployer l'[API](https://github.com/clementgarbay/ExpenseTracker-API) associé avec votre configuration.
 
-Ou alors, l'API est déjà disponible (avec mon compte pré-configuré) ici : [https://expense-tracker-api-gcnmcmtirw.now.sh](https://expense-tracker-api-gcnmcmtirw.now.sh).
+Ou alors, l'API est déjà disponible (avec mon compte pré-configuré) ici : [https://api.clementgarbay.fr/expense-tracker](https://api.clementgarbay.fr/expense-tracker).
 
 EMAIL: Demandez moi
 
