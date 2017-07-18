@@ -10,6 +10,8 @@ function handleErrors (response) {
     //   console.log('err', err)
     //   throw err
     // })
+  } else if (response.status === 500) {
+    throw Error('Une erreur est survenue')
   } else if (!response.ok) {
     throw Error(response.statusText)
   }
