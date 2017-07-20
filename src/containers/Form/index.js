@@ -7,6 +7,7 @@ import {
   Button,
   DatePickerIOS,
   Picker,
+  Platform,
   TextInput,
   View
 } from 'react-native'
@@ -42,7 +43,7 @@ import {
 } from './selectors'
 
 // TODO: find a better way to manipulate dates
-const getReadableDate = date => date.toLocaleString().split(',')[0]
+const getReadableDate = date => `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 const dateToString = date => date.toISOString().split('T')[0]
 
 class Form extends Component {
@@ -98,20 +99,36 @@ class Form extends Component {
       ])
     }
 
+    const isAndroid = Platform.OS === 'android'
+    const picker = (
+      <Picker
+        selectedValue={this.props.type}
+        onValueChange={(itemValue, itemIndex) => this.props.updateType(itemValue)}
+      >
+        <Picker.Item label={expenseTypes.TRANSPORT.label} value={expenseTypes.TRANSPORT.key} />
+        <Picker.Item label={expenseTypes.ACCOMMODATION.label} value={expenseTypes.ACCOMMODATION.key} />
+        <Picker.Item label={expenseTypes.EATING.label} value={expenseTypes.EATING.key} />
+        <Picker.Item label={expenseTypes.OTHER.label} value={expenseTypes.OTHER.key} />
+      </Picker>
+    )
+    const datePicker = !isAndroid && (
+      <DatePickerIOS
+        date={this.props.date}
+        mode='date'
+        onDateChange={(date) => this.props.updateDate(date)}
+      />
+    )
+
     return (
       <View style={styles.container}>
         <FormGroup title='Poste de dépense'>
-          <Collapsible value={valueOfKey(this.props.type)}>
-            <Picker
-              selectedValue={this.props.type}
-              onValueChange={(itemValue, itemIndex) => this.props.updateType(itemValue)}
-            >
-              <Picker.Item label={expenseTypes.TRANSPORT.label} value={expenseTypes.TRANSPORT.key} />
-              <Picker.Item label={expenseTypes.ACCOMMODATION.label} value={expenseTypes.ACCOMMODATION.key} />
-              <Picker.Item label={expenseTypes.EATING.label} value={expenseTypes.EATING.key} />
-              <Picker.Item label={expenseTypes.OTHER.label} value={expenseTypes.OTHER.key} />
-            </Picker>
-          </Collapsible>
+          {
+            !isAndroid ? (
+              <Collapsible value={valueOfKey(this.props.type)}>
+                {picker}
+              </Collapsible>
+            ) : picker
+          }
         </FormGroup>
         <FormGroup title='Prestataire'>
           <TextInput
@@ -136,11 +153,7 @@ class Form extends Component {
         />
         <FormGroup title='Date'>
           <Collapsible value={getReadableDate(this.props.date)}>
-            <DatePickerIOS
-              date={this.props.date}
-              mode='date'
-              onDateChange={(date) => this.props.updateDate(date)}
-            />
+            {datePicker}
           </Collapsible>
         </FormGroup>
         <FormGroup title='Justificatif'>
