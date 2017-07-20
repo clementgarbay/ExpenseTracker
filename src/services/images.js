@@ -11,7 +11,7 @@ export const showImagePicker = () => {
       if (response.error) {
         reject(response.error)
       } else {
-        resolve(response.uri)
+        resolve(response)
       }
     })
   })

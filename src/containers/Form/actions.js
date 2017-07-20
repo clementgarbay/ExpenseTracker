@@ -76,7 +76,7 @@ export const addProof = () => {
   return dispatch => {
     showImagePicker()
       .then((res) => {
-        if (!res.didCancel) dispatch(updateProofAction(res))
+        if (!res.didCancel) dispatch(updateProofAction(res.uri))
       })
       .catch((error) => dispatch(failureAction(error)))
   }
