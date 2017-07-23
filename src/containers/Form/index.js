@@ -43,7 +43,7 @@ import {
 } from './selectors'
 
 // TODO: find a better way to manipulate dates
-const getReadableDate = date => `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+const getReadableDate = date => `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 const dateToString = date => date.toISOString().split('T')[0]
 
 class Form extends Component {
@@ -71,12 +71,7 @@ class Form extends Component {
     proof: null
   }
 
-  constructor (props) {
-    super(props)
-    this.send = this.send.bind(this)
-  }
-
-  send () {
+  send = () => {
     this.props.submit(
       this.props.type,
       this.props.recipient,
