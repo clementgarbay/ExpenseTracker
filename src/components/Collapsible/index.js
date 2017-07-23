@@ -4,13 +4,18 @@ import { View, Text } from 'react-native'
 
 import styles from './styles'
 
-class Collapsible extends Component {
-  constructor (props) {
-    super(props)
+export default class Collapsible extends Component {
+  static propTypes = {
+    value: PropTypes.string,
+    children: PropTypes.any.isRequired
+  }
 
-    this.state = {
-      isCollapsed: true
-    }
+  static defaultProps = {
+    value: ''
+  }
+
+  state = {
+    isCollapsed: true
   }
 
   render () {
@@ -33,14 +38,3 @@ class Collapsible extends Component {
     )
   }
 }
-
-Collapsible.propTypes = {
-  value: PropTypes.string,
-  children: PropTypes.any.isRequired
-}
-
-Collapsible.defaultProps = {
-  value: ''
-}
-
-export default Collapsible
