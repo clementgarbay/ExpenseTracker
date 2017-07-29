@@ -1,5 +1,5 @@
 import { TYPES } from './actions'
-import { TYPES as FormActionsTypes } from '../Form/actions'
+import { TYPES as FormActionsTypes } from '../FormContainer/actions'
 
 // Amounts are stored as string
 // TODO: use number instead of string

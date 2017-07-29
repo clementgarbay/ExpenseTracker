@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
-  ActivityIndicator,
   Alert,
   Button,
   DatePickerIOS,
@@ -11,9 +10,9 @@ import {
   TextInput,
   View
 } from 'react-native'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import styles from './styles'
-
 import currencyConfig from '../../../config/currency'
 import { TYPES as expenseTypes, valueOfKey } from '../../models/expense'
 import FormGroup from '../../components/FormGroup'
@@ -84,15 +83,18 @@ class Form extends Component {
   }
 
   render () {
-    if (this.props.error) {
-      Alert.alert('Oops 🙁', this.props.error, [
-        { text: 'OK', onPress: () => this.props.resetStatus() }
-      ])
-    } else if (this.props.isSucceed) {
-      Alert.alert(null, '👍 Dépense ajoutée', [
-        { text: 'OK', onPress: () => this.props.resetStatus() }
-      ])
-    }
+    // TOFIX
+    setTimeout(() => {
+      if (this.props.error) {
+        Alert.alert('Oops 🙁', this.props.error, [
+          { text: 'OK', onPress: () => this.props.resetStatus() }
+        ])
+      } else if (this.props.isSucceed) {
+        Alert.alert(null, '👍 Dépense ajoutée', [
+          { text: 'OK', onPress: () => this.props.resetStatus() }
+        ])
+      }
+    }, 100)
 
     const isAndroid = Platform.OS === 'android'
     const picker = (
@@ -160,15 +162,20 @@ class Form extends Component {
         </FormGroup>
         <FormGroup>
           {
-            !this.props.isPending ? (
+            !this.props.isPending && (
               <Button
                 onPress={this.send}
                 title='Ajouter la dépense'
                 color='#4a8bfc'
               />
-            ) : <ActivityIndicator />
+            )
           }
         </FormGroup>
+        {
+          this.props.isPending && (
+            <Spinner visible={this.props.isPending} />
+          )
+        }
       </View>
     )
   }

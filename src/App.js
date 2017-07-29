@@ -1,24 +1,27 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { StyleSheet, ScrollView } from 'react-native'
+import { TabNavigator } from 'react-navigation'
 
 import store from './store'
-import Form from './containers/Form'
+import FormScreen from './screens/FormScreen'
+import ConfigScreen from './screens/ConfigScreen'
+
+const Router = TabNavigator({
+  Form: { screen: FormScreen },
+  Config: { screen: ConfigScreen }
+}, {
+  tabBarOptions: {
+    showIcon: true,
+    labelStyle: {
+      fontSize: 12
+    }
+  }
+})
 
 const App = () => (
   <Provider store={store}>
-    <ScrollView style={styles.container}>
-      <Form />
-    </ScrollView>
+    <Router />
   </Provider>
 )
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 40,
-    marginTop: 20
-  }
-})
 
 export default App
