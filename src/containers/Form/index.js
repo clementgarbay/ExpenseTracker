@@ -98,7 +98,10 @@ class Form extends Component {
     const picker = (
       <Picker
         selectedValue={this.props.type}
-        onValueChange={(itemValue, itemIndex) => this.props.updateType(itemValue)}
+        onValueChange={(itemValue, itemIndex) => {
+            this.props.updateType(itemValue);
+            this.refs.prestataire.focus();  
+          }}
       >
         <Picker.Item label={expenseTypes.TRANSPORT.label} value={expenseTypes.TRANSPORT.key} />
         <Picker.Item label={expenseTypes.ACCOMMODATION.label} value={expenseTypes.ACCOMMODATION.key} />
@@ -127,6 +130,7 @@ class Form extends Component {
         </FormGroup>
         <FormGroup title='Prestataire'>
           <TextInput
+            ref={'prestataire'}
             value={this.props.recipient}
             placeholder='Fournisseur ou prestataire...'
             onChangeText={(recipient) => this.props.updateRecipient(recipient)}
