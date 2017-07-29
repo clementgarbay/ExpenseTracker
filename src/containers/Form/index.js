@@ -146,11 +146,16 @@ class Form extends Component {
             ref='description'
             value={this.props.description}
             placeholder='Description...'
+            onSubmitEditing={(event) => { 
+              this.refs.amount.focus(); 
+            }}
             onChangeText={(description) => this.props.updateDescription(description)}
+            returnKeyType='next'
             style={styles.textInput}
           />
         </FormGroup>
         <AmountConverter
+          ref='amount'
           currencyFrom={currencyConfig.from}
           currencyTo={currencyConfig.to}
           exchangeRate={currencyConfig.exchangeRate}
