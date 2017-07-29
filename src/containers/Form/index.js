@@ -134,6 +134,7 @@ class Form extends Component {
             value={this.props.recipient}
             placeholder='Fournisseur ou prestataire...'
             returnKeyType={'next'}
+            autoCorrect={false}
             onSubmitEditing={(event) => { 
               this.refs.description.focus(); 
             }}
@@ -145,6 +146,7 @@ class Form extends Component {
           <TextInput
             ref='description'
             value={this.props.description}
+            autoCorrect={false}
             placeholder='Description...'
             onSubmitEditing={(event) => { 
               this.refs.amount.focus(); 
