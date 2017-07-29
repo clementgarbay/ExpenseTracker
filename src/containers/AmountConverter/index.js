@@ -16,12 +16,13 @@ class AmountConverter extends Component {
     exchangeRate: PropTypes.number.isRequired,
     amountFrom: PropTypes.string.isRequired,
     amountTo: PropTypes.string,
-    computeAmountTo: PropTypes.func.isRequired,
-    ref: PropTypes.string.isRequired
+    inputRef: PropTypes.func,
+    computeAmountTo: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    amountTo: null
+    amountTo: null,
+    inputRef: () => {}
   }
 
   render () {

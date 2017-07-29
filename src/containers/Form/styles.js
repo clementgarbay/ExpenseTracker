@@ -7,5 +7,8 @@ export default StyleSheet.create({
   textInput: {
     fontSize: 18,
     color: '#333333'
+  },
+  buttonPrimary: {
+    color: '#4a8bfc'
   }
 })

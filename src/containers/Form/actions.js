@@ -68,7 +68,9 @@ export const updateDescription = (description) => {
   return dispatch => dispatch(updateDescriptionAction(description))
 }
 
-export const updateDate = (date) => {
+export const updateDate = (formattedDate) => {
+  const parts = formattedDate.split('/') // TODO: use momentjs ?
+  const date = new Date(parts[2], parts[1] - 1, parts[0])
   return dispatch => dispatch(updateDateAction(date))
 }
 
@@ -95,7 +97,10 @@ export const submit = (type, recipient, description, amount, currency, date, pro
     dispatch(submitPendingAction())
 
     try {
-      await addExpense(type, recipient, description, amount, currency, date, proof)
+      const formattedDate = date.toISOString().split('T')[0] // TODO: use momentjs ?
+
+      await addExpense(type, recipient, description, amount, currency, formattedDate, proof)
+
       dispatch(submitSuccessAction())
     } catch (error) {
       dispatch(failureAction(error.message))
