@@ -133,12 +133,17 @@ class Form extends Component {
             ref={'prestataire'}
             value={this.props.recipient}
             placeholder='Fournisseur ou prestataire...'
+            returnKeyType={'next'}
+            onSubmitEditing={(event) => { 
+              this.refs.description.focus(); 
+            }}
             onChangeText={(recipient) => this.props.updateRecipient(recipient)}
             style={styles.textInput}
           />
         </FormGroup>
         <FormGroup title='Description'>
           <TextInput
+            ref='description'
             value={this.props.description}
             placeholder='Description...'
             onChangeText={(description) => this.props.updateDescription(description)}
