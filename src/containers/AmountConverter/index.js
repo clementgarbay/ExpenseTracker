@@ -16,7 +16,8 @@ class AmountConverter extends Component {
     exchangeRate: PropTypes.number.isRequired,
     amountFrom: PropTypes.string.isRequired,
     amountTo: PropTypes.string,
-    computeAmountTo: PropTypes.func.isRequired
+    computeAmountTo: PropTypes.func.isRequired,
+    ref: PropTypes.string.isRequired
   }
 
   static defaultProps = {
@@ -27,6 +28,7 @@ class AmountConverter extends Component {
     return (
       <FormGroup title={`Montant (en ${this.props.currencyFrom})`}>
         <TextInput
+          ref={this.props.inputRef}
           value={this.props.amountFrom}
           placeholder='Montant...'
           keyboardType='decimal-pad'
