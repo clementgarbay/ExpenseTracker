@@ -10,7 +10,8 @@
 	"scripts": {
 		"lint": "standard 'src/**/*.js'",
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "yarn run lint",
+		"test:jest": "jest"
 	},
 	"standard": {
 		"parser": "babel-eslint",
