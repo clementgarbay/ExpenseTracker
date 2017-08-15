@@ -1,13 +1,11 @@
-# ExpenseTracker
+# ExpenseTracker [![Build Status](https://travis-ci.org/clementgarbay/ExpenseTracker.svg?branch=master)](https://travis-ci.org/clementgarbay/ExpenseTracker)
 
 Works with [this API](https://github.com/clementgarbay/ExpenseTracker-API).
-
-Only tested on iOS at the moment.
 
 ## Installation
 
 ```
-yarn install
+yarn
 ```
 
 ## Build and run on iOS Simulator
