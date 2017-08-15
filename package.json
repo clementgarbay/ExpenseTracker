@@ -8,17 +8,22 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
+		"lint": "standard 'src/**/*.js'",
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest"
 	},
 	"standard": {
 		"parser": "babel-eslint",
-		"globals": ["fetch"]
+		"globals": [
+			"FormData",
+			"fetch"
+		]
 	},
 	"dependencies": {
 		"prop-types": "^15.5.10",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.46.3",
+		"react-native-datepicker": "^1.6.0",
 		"react-native-image-picker": "^0.26.3",
 		"react-redux": "^5.0.5",
 		"redux": "^3.7.1",

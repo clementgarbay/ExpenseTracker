@@ -5,9 +5,6 @@ import {
   ActivityIndicator,
   Alert,
   Button,
-  DatePickerIOS,
-  Picker,
-  Platform,
   TextInput,
   View
 } from 'react-native'
@@ -15,10 +12,10 @@ import {
 import styles from './styles'
 
 import currencyConfig from '../../../config/currency'
-import { TYPES as expenseTypes, valueOfKey } from '../../models/expense'
 import FormGroup from '../../components/FormGroup'
-import Collapsible from '../../components/Collapsible'
 import ImagePicker from '../../components/ImagePicker'
+import ExpenseTypePicker from '../../components/ExpenseTypePicker'
+import DatePicker from '../../components/DatePicker'
 import AmountConverter from '../AmountConverter'
 import { getAmountFrom } from '../AmountConverter/selectors'
 import {
@@ -41,10 +38,6 @@ import {
   getIsSucceed,
   getError
 } from './selectors'
-
-// TODO: find a better way to manipulate dates
-const getReadableDate = date => `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-const dateToString = date => date.toISOString().split('T')[0]
 
 class Form extends Component {
   static propTypes = {
@@ -78,7 +71,7 @@ class Form extends Component {
       this.props.description,
       this.props.amount,
       currencyConfig.from,
-      dateToString(this.props.date),
+      this.props.date,
       this.props.proof
     )
   }
@@ -94,86 +87,57 @@ class Form extends Component {
       ])
     }
 
-    const isAndroid = Platform.OS === 'android'
-    const picker = (
-      <Picker
-        selectedValue={this.props.type}
-        onValueChange={(itemValue, itemIndex) => {
-          this.props.updateType(itemValue)
-          this.refs.prestataire.focus()
-        }}
-      >
-        <Picker.Item label={expenseTypes.TRANSPORT.label} value={expenseTypes.TRANSPORT.key} />
-        <Picker.Item label={expenseTypes.ACCOMMODATION.label} value={expenseTypes.ACCOMMODATION.key} />
-        <Picker.Item label={expenseTypes.EATING.label} value={expenseTypes.EATING.key} />
-        <Picker.Item label={expenseTypes.OTHER.label} value={expenseTypes.OTHER.key} />
-      </Picker>
-    )
-    const datePicker = !isAndroid && (
-      <DatePickerIOS
-        date={this.props.date}
-        mode='date'
-        onDateChange={(date) => this.props.updateDate(date)}
-      />
-    )
-
     return (
       <View style={styles.container}>
         <FormGroup title='Poste de dépense'>
-          {
-            !isAndroid ? (
-              <Collapsible value={valueOfKey(this.props.type)}>
-                {picker}
-              </Collapsible>
-            ) : picker
-          }
+          <ExpenseTypePicker
+            type={this.props.type}
+            updateType={(type) => {
+              this.props.updateType(type)
+              this.refs.prestataire.focus()
+            }}
+          />
         </FormGroup>
         <FormGroup title='Prestataire'>
           <TextInput
             ref='prestataire'
-            value={this.props.recipient}
-            placeholder='Fournisseur ou prestataire...'
             returnKeyType='next'
-            autoCorrect={false}
-            onSubmitEditing={(event) => {
-              this.refs.description.focus()
-            }}
-            onChangeText={(recipient) => this.props.updateRecipient(recipient)}
+            placeholder='Fournisseur ou prestataire...'
+            value={this.props.recipient}
+            onChangeText={this.props.updateRecipient}
+            onSubmitEditing={() => this.refs.description.focus()}
             style={styles.textInput}
           />
         </FormGroup>
         <FormGroup title='Description'>
           <TextInput
             ref='description'
-            value={this.props.description}
-            autoCorrect={false}
-            placeholder='Description...'
-            onSubmitEditing={(event) => {
-              this.amountInput.focus()
-            }}
-            onChangeText={(description) => this.props.updateDescription(description)}
             returnKeyType='next'
+            placeholder='Description...'
+            autoCorrect={false}
+            value={this.props.description}
+            onChangeText={this.props.updateDescription}
+            onSubmitEditing={() => this.amountInput.focus()}
             style={styles.textInput}
           />
         </FormGroup>
         <AmountConverter
-          inputRef={el => {
-            this.amountInput = el
-          }}
+          inputRef={input => { this.amountInput = input }}
           currencyFrom={currencyConfig.from}
           currencyTo={currencyConfig.to}
           exchangeRate={currencyConfig.exchangeRate}
         />
         <FormGroup title='Date'>
-          <Collapsible value={getReadableDate(this.props.date)}>
-            {datePicker}
-          </Collapsible>
+          <DatePicker
+            date={this.props.date}
+            updateDate={this.props.updateDate}
+          />
         </FormGroup>
         <FormGroup title='Justificatif'>
           <ImagePicker
             source={this.props.proof}
-            onAddClick={() => this.props.addProof()}
-            onRemoveClick={() => this.props.removeProof()}
+            onAddClick={this.props.addProof}
+            onRemoveClick={this.props.removeProof}
           />
         </FormGroup>
         <FormGroup>

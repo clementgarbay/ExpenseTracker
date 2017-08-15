@@ -18,6 +18,10 @@ export default class Collapsible extends Component {
     isCollapsed: true
   }
 
+  collapse = () => {
+    this.setState({ isCollapsed: true })
+  }
+
   render () {
     return (
       <View>
