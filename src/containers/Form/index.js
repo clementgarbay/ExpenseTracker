@@ -99,9 +99,9 @@ class Form extends Component {
       <Picker
         selectedValue={this.props.type}
         onValueChange={(itemValue, itemIndex) => {
-            this.props.updateType(itemValue);
-            this.refs.prestataire.focus();  
-          }}
+          this.props.updateType(itemValue)
+          this.refs.prestataire.focus()
+        }}
       >
         <Picker.Item label={expenseTypes.TRANSPORT.label} value={expenseTypes.TRANSPORT.key} />
         <Picker.Item label={expenseTypes.ACCOMMODATION.label} value={expenseTypes.ACCOMMODATION.key} />
@@ -135,8 +135,8 @@ class Form extends Component {
             placeholder='Fournisseur ou prestataire...'
             returnKeyType='next'
             autoCorrect={false}
-            onSubmitEditing={(event) => { 
-              this.refs.description.focus(); 
+            onSubmitEditing={(event) => {
+              this.refs.description.focus()
             }}
             onChangeText={(recipient) => this.props.updateRecipient(recipient)}
             style={styles.textInput}
@@ -148,8 +148,8 @@ class Form extends Component {
             value={this.props.description}
             autoCorrect={false}
             placeholder='Description...'
-            onSubmitEditing={(event) => { 
-              this.amountInput.focus(); 
+            onSubmitEditing={(event) => {
+              this.amountInput.focus()
             }}
             onChangeText={(description) => this.props.updateDescription(description)}
             returnKeyType='next'
@@ -157,7 +157,9 @@ class Form extends Component {
           />
         </FormGroup>
         <AmountConverter
-          inputRef={el => this.amountInput = el }
+          inputRef={el => {
+            this.amountInput = el
+          }}
           currencyFrom={currencyConfig.from}
           currencyTo={currencyConfig.to}
           exchangeRate={currencyConfig.exchangeRate}
